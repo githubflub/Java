@@ -4,6 +4,13 @@
 RemoteSystemsTempFiles
 bin
 
+# Visual Studio
+.vs
+Debug
+*.VC.db
+*.VC.VC.opendb
+*.vcxproj.user
+
 
 # Windows image file caches
 Thumbs.db

@@ -9,10 +9,54 @@ public class Main {
 		String myString = "qwertyuiop"; 		
 		String str1 = "panama";
 		String str2 = "amanaj"; 
-		
+		String strURL = "aa b  "; // truLen = 4
 		
 		System.out.println("Is the string \"" + myString + "\" unique? " + m.isUnique(myString));
-		System.out.println("Is \"" + str1 + "\" a permutation of \"" + str2 + "\"? " + m.checkPermutation(str1, str2));  
+		System.out.println("Is \"" + str1 + "\" a permutation of \"" + str2 + "\"? " + m.checkPermutation(str1, str2));
+		System.out.println("URLify \"" + strURL + "\": \"" + m.urlify(strURL, 4) + "\"");
+	}
+	
+	private String urlify( String str, int trueLength)
+	{
+		// problem constraints require me to use a character array
+		char[] arr = str.toCharArray(); 
+		
+		// Turn trueLength into an index
+		trueLength--; 
+		
+		// assume the array contains enough spaces at the end
+		// for the extra chars added by all the %20	
+		int spaces = 0; 
+		for (int k = 0; k <= trueLength; k++) 
+		{			
+			if (arr[k] == ' ') 
+			{				
+				spaces = spaces + 2; 
+			}
+		}		
+		
+		int a = trueLength, b = trueLength + spaces;		
+		// add terminating null if necessary
+		if (arr.length > b + 1) 
+		{
+			arr[b+1] = '\0';
+		}
+		while (b > a) 
+		{
+			if (arr[a] == ' ')
+			{
+				arr[b] = '0'; 
+				arr[b-1] = '2';
+				arr[b-2] = '%'; 
+				b = b - 3; 
+				a--; 
+			}
+			else  
+			{
+				arr[b--] = arr[a--];				
+			}			
+		}
+		return new String(arr); 
 	}
 	
 	private boolean isUnique(String arg)
