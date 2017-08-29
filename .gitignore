@@ -10,6 +10,7 @@ Debug
 *.VC.db
 *.VC.VC.opendb
 *.vcxproj.user
+*.pdb
 
 
 # Windows image file caches

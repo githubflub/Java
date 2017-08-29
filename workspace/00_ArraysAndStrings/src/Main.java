@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Main {
 	public static void main (String [] args) 
@@ -14,6 +15,108 @@ public class Main {
 		System.out.println("Is the string \"" + myString + "\" unique? " + m.isUnique(myString));
 		System.out.println("Is \"" + str1 + "\" a permutation of \"" + str2 + "\"? " + m.checkPermutation(str1, str2));
 		System.out.println("URLify \"" + strURL + "\": \"" + m.urlify(strURL, 4) + "\"");
+		
+		// Proof that Java passes arrays by "reference"
+		int[] nums = {3, 4, 5}; 
+		System.out.println("nums before: " + Arrays.toString(nums)); 
+		m.checkArray(nums); 
+		System.out.println(" nums after: " + Arrays.toString(nums));
+		
+		// Check Palindrome permutation
+		String str3 = "Tact Cza"; 
+		System.out.println("Is \"" + str3 + "\" a palindrome permutation?: " + m.checkPalindromePermutation(str3));
+		
+		// Check palindrome permutation with Hash
+		System.out.println("Is \"" + str3 + "\" a palindrome permutation (hash)?: " + m.checkPalindromePermutationHash(str3));
+		
+		// Show that Character.getNumbericValue() is case insensitive. 
+		char a = 'a'; 
+		char A = 'T'; 
+		char b = '\"'; // Show that non-letter characters map to -1
+		System.out.println("a: " + Character.getNumericValue(a) + ", A: " + Character.getNumericValue(A));
+		System.out.println("non-letter: " + Character.getNumericValue(b));
+		System.out.println("z - a = " + (Character.getNumericValue('z') - Character.getNumericValue('a')));
+		
+	}
+	
+	private boolean checkPalindromePermutationHash(String str)
+	{
+		// Allocate a Hash Table for all 26 letters in the alphabet 
+		int[] hashTable = new int[26]; 
+		
+		// Hash everything using the "hash function" getNumericValue()
+		for (int k = 0; k < str.length(); k++)
+		{
+			int val = Character.getNumericValue(str.charAt(k)) - 10;
+			if (val < 0)
+			{
+				continue; // ignore not letter chars
+			}			
+			hashTable[val]++; 			
+		}
+		
+		// Check hash table 
+		int numOdds = 0; 
+		for (int k = 0; k < hashTable.length; k++)
+		{
+			if (hashTable[k] % 2 == 1)
+			{
+				numOdds++; 
+				if (numOdds > 1)
+				{
+					return false; 
+				}
+			}
+		}
+		
+		return true; 
+	}
+	
+	private boolean checkPalindromePermutation(String str) 
+	{
+		// ignore case
+		str = str.toLowerCase(); 
+		
+		// Array to store counts 
+		int[] arr = new int[128]; // default values will be 0
+		
+		// Letter counts 
+		for (int k = 0; k < str.length(); k++)
+		{
+			
+			if (str.charAt(k) == ' ') // ignore spaces
+			{
+				continue; 
+			}
+			else // add count to array
+			{
+				arr[str.charAt(k)]++; 
+			}
+		}
+		
+		// Check counts. If more than 1 odd, return false. 
+		int numOdd = 0; 
+		for (int k = 0; k < str.length(); k++)
+		{
+			// ignore spaces
+			if (str.charAt(k) == ' ')
+			{
+				continue; 
+			}
+			
+			if (arr[str.charAt(k)] % 2 == 1) // check if odd
+			{
+				numOdd++;
+				if (numOdd > 1) // if more than 1 odd, return false
+					return false; 
+			}
+		}
+		return true; 
+	}
+	
+	private void checkArray(int[] arr) 
+	{
+		arr[0] = 45; 
 	}
 	
 	private String urlify( String str, int trueLength)
