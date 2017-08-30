@@ -1,4 +1,4 @@
-import java.util.Arrays;
+	import java.util.Arrays;
 
 public class Main {
 	public static void main (String [] args) 
@@ -22,7 +22,7 @@ public class Main {
 		m.checkArray(nums); 
 		System.out.println(" nums after: " + Arrays.toString(nums));
 		
-		// Check Palindrome permutation
+		// Check palindrome permutation
 		String str3 = "Tact Cza"; 
 		System.out.println("Is \"" + str3 + "\" a palindrome permutation?: " + m.checkPalindromePermutation(str3));
 		
@@ -37,6 +37,71 @@ public class Main {
 		System.out.println("non-letter: " + Character.getNumericValue(b));
 		System.out.println("z - a = " + (Character.getNumericValue('z') - Character.getNumericValue('a')));
 		
+		// Show if two strings are "one away"
+		String str4 = "palz"; 
+		String str5 = "pal e";
+		
+		System.out.println("Is \"" + str4 + "\" one away from \"" + str5 + "\"? " + m.oneAway(str4, str5));
+		
+	}
+	
+	private boolean oneAway(String s1, String s2)
+	{
+		// Is this case sensitive? 
+		// New strat: hash the longer one, 
+		// then check if hash contains
+		// more than one fail, means false
+		
+		// Should be within 1 char of each other.
+		int diff = s2.length() - s1.length();
+		if ( diff < -1 || diff > 1)
+		{
+			return false; 
+		}		
+		
+		// Set the shorter/larger string
+		String shorter;
+		String larger; 
+		if (diff >= 0)
+		{
+			shorter = s1; 
+			larger = s2; 			
+		}
+		else // diff < 0
+		{
+			shorter = s2; 
+			larger = s1; 
+		}
+		
+		// Check insert/remove 		
+		// we don't have to do this if strings are same size
+		if (diff != 0) 
+		{
+			for (int k = 0, largerIndex = 0, diffCount = 0; k < shorter.length(); k++)
+			{	
+				while (shorter.charAt(k) != larger.charAt(largerIndex))
+				{
+					diffCount++; 
+					if (diffCount > 1) return false; 
+					largerIndex++; 
+				}
+				largerIndex++; 
+			}
+		} // passed insert test
+		else 			
+		{
+			// Check replace
+			for (int k = 0, diffCount = 0; k < shorter.length(); k++)
+			{				
+				if (shorter.charAt(k) != larger.charAt(k))
+				{
+					diffCount++; 
+					if (diffCount > 1) return false; 
+				}
+			}
+		}
+		
+		return true; 
 	}
 	
 	private boolean checkPalindromePermutationHash(String str)
