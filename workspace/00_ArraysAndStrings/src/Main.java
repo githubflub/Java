@@ -44,7 +44,7 @@ public class Main {
 		System.out.println("Is \"" + str4 + "\" one away from \"" + str5 + "\"? " + m.oneAway(str4, str5));
 		
 		// String compressor
-		String str6 = "aabcccccaaa"; 
+		String str6 = "abcca"; 
 		System.out.println("\"" + str6 + "\" compresses to \"" + m.stringCompression(str6) + "\"");
 		
 	}
@@ -55,12 +55,17 @@ public class Main {
 		
 		// get char counts 
 		char prevChar = str.charAt(0); 	
-		int charCount = 0; 		 
+		int charCount = 0; 	
+		boolean returnOriginalStr = true; 
 		for (int k = 0; k < str.length(); k++)
 		{
 			if (str.charAt(k) == prevChar)
 			{
 				charCount++; 
+				if (charCount > 1)
+				{
+					returnOriginalStr = false; 
+				}				 				
 			}
 			if (str.charAt(k) != prevChar)
 			{
@@ -75,7 +80,15 @@ public class Main {
 				retStr.append(charCount); 
 			}
 		}
-		return retStr.toString(); 
+		
+		if (returnOriginalStr)
+		{
+			return str; 
+		}
+		else 
+		{
+			return retStr.toString();
+		}		 
 	}
 	
 	private boolean oneAway(String s1, String s2)
