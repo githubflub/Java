@@ -47,6 +47,63 @@ public class Main {
 		String str6 = "abcca"; 
 		System.out.println("\"" + str6 + "\" compresses to \"" + m.stringCompression(str6) + "\"");
 		
+		// rotate matrix
+		// Create multidimensional array
+		int N = 3; 
+		int M = 6; 
+		int[][] multiray =  new int[N][N]; 
+		int[][] multiray2 =  new int[M][M]; 
+		// populate arrays
+		for (int k = 0; k < N; k++)
+		{
+			for (int j = 0; j < N; j++)
+			{
+				multiray[k][j] = j; 
+			}
+		}		 
+		m.printMultiray(multiray);
+		m.rotateMatrix(multiray);
+		System.out.println("Behold the rotated array:");
+		m.printMultiray(multiray);
+		//m.printMultiray(multiray2);
+		
+	}
+	
+	private void rotateMatrix(int[][] arr) 
+	{
+		// Assume array is square
+		int N = arr[0].length; // array dimension
+		int numOuterLoops = N / 2; 			
+		
+		int layerStartIndex; 		 
+		int layerEnd; 
+		int swap; 
+		
+		for (int k = 0; k < numOuterLoops; k++)
+		{
+			layerStartIndex = k; 			
+			layerEnd = N - k - 1; // this is an index
+			for (int j = k; j < layerEnd; j++)
+			{
+				swap = arr[j][layerEnd];				
+				arr[j][layerEnd] = arr[k][j]; 				
+				arr[k][j] = arr[layerEnd - j + k][k]; 				
+				arr[layerEnd-j+k][k] = arr[layerEnd][layerEnd -j+k]; 
+				arr[layerEnd][layerEnd - j+k] = swap; 				
+			}			
+		}		
+	}
+	
+	private void printMultiray(int[][] arr)
+	{
+		for (int k = 0; k < arr.length; k++)
+		{
+			for (int j = 0; j < arr[k].length; j++)
+			{
+				System.out.printf("%d ", arr[k][j]);
+			}
+			System.out.println();
+		}		
 	}
 	
 	private String stringCompression(String str)
